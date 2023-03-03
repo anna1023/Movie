@@ -314,12 +314,72 @@ public class MovieCollection
 
     private void listHighestRated()
     {
-
+        ArrayList<Double>rating = new ArrayList<Double>();
+        Movie[] rating50 = new Movie[50];
+        ArrayList<Movie> results = new ArrayList<Movie>();
+        for (int i = 0; i< movies.size();i++){
+            rating.add(movies.get(i).getUserRating());
+            results.add(movies.get(i));
+        }
+        for (int i = 1; i < results.size(); i++) {
+            int j = i;
+            while (j > 0 && results.get(j - 1).getUserRating() < (results.get(j).getUserRating())) {
+                Movie swap = results.set(j - 1, results.get(j));
+                results.set(j, swap);
+                j--;
+            }
+        }
+        for (int i = 0; i< rating50.length; i++){
+            rating50[i]=results.get(i);
+        }
+        for (int i=0;i< rating50.length;i++){
+            String title = rating50[i].getTitle();
+            Double stars = rating50[i].getUserRating();
+            int choiceNum = i+1;
+            System.out.println(""+choiceNum+". "+title+" "+stars);
+        }
+        System.out.println("Which movie would you like to learn more about?");
+        System.out.println("Enter number: ");
+        int choices = scanner.nextInt();
+        Movie selectedMovie = results.get(choices-1);
+        displayMovieInfo(selectedMovie);
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
     }
 
     private void listHighestRevenue()
     {
-
+        ArrayList<Integer>money = new ArrayList<Integer>();
+        Movie[] money50 = new Movie[50];
+        ArrayList<Movie> results = new ArrayList<Movie>();
+        for (int i = 0; i< movies.size();i++){
+            money.add(movies.get(i).getRevenue());
+            results.add(movies.get(i));
+        }
+        for (int i = 1; i < results.size(); i++) {
+            int j = i;
+            while (j > 0 && results.get(j - 1).getRevenue() < (results.get(j).getRevenue())) {
+                Movie swap = results.set(j - 1, results.get(j));
+                results.set(j, swap);
+                j--;
+            }
+        }
+        for (int i = 0; i< money50.length; i++){
+            money50[i]=results.get(i);
+        }
+        for (int i=0;i< money50.length;i++){
+            String title = money50[i].getTitle();
+            int rev = money50[i].getRevenue();
+            int choiceNum = i+1;
+            System.out.println(""+choiceNum+". "+title+" "+rev);
+        }
+        System.out.println("Which movie would you like to learn more about?");
+        System.out.println("Enter number: ");
+        int choices = scanner.nextInt();
+        Movie selectedMovie = results.get(choices-1);
+        displayMovieInfo(selectedMovie);
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
     }
 
     private void importMovieList(String fileName)
